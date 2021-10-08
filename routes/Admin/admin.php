@@ -43,6 +43,7 @@ Route::get('/home', [HomeController::class, 'index'])->middleware('auth')->name(
 Route::get('/carreras', [CarreraController::class, 'index'])->middleware('auth')->name('carreras');
 Route::get('/usuarios', [UserController::class, 'index'])->middleware('auth')->name('usuarios');
 Route::post('/register/role', [RegisterController::class, 'selectRole'])->name('role');
+Route::post('/verification', [RegisterController::class, 'verification'])->name('verification');
 Route::patch('/index/{user}', [RegisterController::class, 'storeRole'])->name('role.store');
 
 

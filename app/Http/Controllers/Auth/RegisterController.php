@@ -67,9 +67,115 @@ class RegisterController extends Controller
     {
         
     }
-    public function selectRole(Request $request)
+
+    public function verification(Request $request)
     {
-        $roles = Role::all();
+        $data = request()->except('_token');
+
+
+
+
+        return view ('auth.verificacionsiiau')->with(['data' => $data]);
+    }
+    public function selectRole(Request $request, User $data)
+    {
+        include 'simple_html_dom.php';
+        
+        $datos_siiau = request()->except('_token');
+        $campos = [
+            'p_codigo_c' => $datos_siiau['code'],
+            'p_clave_c' => $datos_siiau['nip']          
+        ];
+
+       $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "http://siiauescolar.siiau.udg.mx/wus/gupprincipal.valida_inicio");
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($campos));
+        curl_setopt($ch, CURLOPT_COOKIEJAR, "cookie.txt");
+        
+        //$response = curl_exec($ch);
+        //return $response;
+        //curl_close($ch);
+        
+
+              
+        $id_hidden = [
+            'p_pidm_n' => '1145982'
+        ];
+        curl_setopt($ch, CURLOPT_URL, "http://siiauescolar.siiau.udg.mx/wus/gupprincipal.FrameMenu");
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($id_hidden));
+        curl_setopt($ch, CURLOPT_COOKIEFILE, "cookie.txt");
+        curl_setopt($ch, CURLOPT_COOKIEJAR, "cookie.txt");
+       
+        
+        
+       $response = curl_exec($ch);
+       echo $response;
+       curl_close($ch);
+        /*
+        curl_setopt($ch, CURLOPT_URL, "http://siiauescolar.siiau.udg.mx/wus/gupmenug.menu_sistema?p_pidm_n=1145982");
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
+        curl_setopt($ch, CURLOPT_COOKIEFILE, "cookie.txt");
+        curl_setopt($ch, CURLOPT_COOKIEJAR, "cookie.txt");
+        
+        
+        $response = curl_exec($ch);
+       // echo $response;
+        //curl_close($ch);
+        
+        
+        curl_setopt($ch, CURLOPT_URL, value:"http://siiauescolar.siiau.udg.mx/wal/gupmenug.menu?p_sistema_c=ALUMNOS&p_sistemaid_n=3&p_menupredid_n=3&p_pidm_n=".$id_hidden['p_pidm_n']);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, value:1);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, value:1); 
+        curl_setopt($ch, CURLOPT_COOKIEFILE, "cookie.txt");
+        curl_setopt($ch, CURLOPT_COOKIEJAR, "cookie.txt");
+      
+        
+        $response = curl_exec($ch);
+        //echo $response;
+        //curl_close($ch);
+        
+        
+        curl_setopt($ch, CURLOPT_URL, value:"http://siiauescolar.siiau.udg.mx/wal/gupmenug.menu?p_sistema_c=ALUMNOS&p_sistemaid_n=3&p_menupredid_n=236&p_pidm_n=".$id_hidden['p_pidm_n']);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, value:1);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, value:1); 
+        curl_setopt($ch, CURLOPT_COOKIEFILE, "cookie.txt");
+        curl_setopt($ch, CURLOPT_COOKIEJAR, "cookie.txt");
+        
+        
+        $response = curl_exec($ch);
+        //echo $response;
+        //curl_close($ch);
+        
+        
+        curl_setopt($ch, CURLOPT_URL, value: "http://siiauescolar.siiau.udg.mx/wal/sgphist.promedio?pidmp=1145982&majrp=INCO");
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, value:1);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, value:1); 
+        curl_setopt($ch, CURLOPT_COOKIEFILE, "cookie.txt");
+        curl_setopt($ch, CURLOPT_COOKIEJAR, "cookie.txt");
+      
+        
+        $response = curl_exec($ch);
+        if (curl_errno($ch)) { 
+            print curl_error($ch); 
+         } 
+        echo $response;
+        curl_close($ch);
+        
+       
+        
+
+
+       
+
+        
+        /*$roles = Role::all();
         $carreras = Carrera::all();
         $coordinadores = Coordinador::all();
         $data = request()->except('_token');
@@ -80,8 +186,9 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
         return view('auth.usertype')->with(['user' => $user, 'roles' => $roles, 
-        'carreras' => $carreras, 'coordinadores' => $coordinadores]);
-           
+        'carreras' => $carreras, 'coordinadores' => $coordinadores]);*/
+        
+        
     }
 
     protected function create(array $data)

@@ -14,7 +14,8 @@
         "laravel/ui": "^3.3",
         "laravelcollective/html": "^6.2",
         "spatie/laravel-permission": "^5.1",
-        "vinkla/hashids": "^9.1"
+        "vinkla/hashids": "^9.1",
+        "simple-html-dom/simple-html-dom": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
@@ -61,6 +62,12 @@
         "preferred-install": "dist",
         "sort-packages": true
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/Youpie/simple-html-dom"
+        }
+    ],
     "minimum-stability": "dev",
     "prefer-stable": true
 }
