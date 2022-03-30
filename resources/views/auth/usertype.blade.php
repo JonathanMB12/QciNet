@@ -12,37 +12,7 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script type="text/javascript" src="js/jquery.js"></script>
-    <script type="text/javascript">
-        function mostrar(id, {{ $coordinadores}} ) {
-            var coordinadores = json_encode($coordinadores);
-            
-            for(var i = 1; i < 19; i++){
-                
-                if (id == i) {
-                    //si ya hay un coordinador de la carrera
-
-                    $("#coordinador-estudiante-header").hide();
-                    $("#coordinador-estudiante").hide();
-                    
-                    $("#estudiante-header").show();
-                    $("#estudiante").show();
-                
-                
-                }
-                else{    
-                    
-                    $("#estudiante-header").hide();
-                    $("#estudiante").hide();
-
-                    $("#coordinador-estudiante-header").show();
-                    $("#coordinador-estudiante").show();
-                }
-                    
-                
-            }
-        }
-    </script>                                   
-
+    
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -85,72 +55,36 @@
         
                 
                     {!! Form::model($user, ['route' => ['role.store', ['user' => $user]], 'method' => 'POST']) !!}
-                    {{ method_field('PATCH')}}
                     @csrf 
-                        <div class="card-header">{{ __('¿De qué carrera eres?') }} </div>
+                    {{ method_field('PATCH')}}
+                    
+                    <div class="card-body">  
+                        <input id="id_carrera" name="id_carrera" value= " {{$carrera}} " readonly>
+                        <input id="carrerra_nombre" name="carrera_nombre" value= " {{$nombre_carrera}} " readonly>
+                            
+                        
+                            
+                        
+
+                        <div class="card-header">{{ __('¿Eres estudiante o coordinador?') }} </div>
                         <div class="card-body">  
-                            <select id="id_carrera" name="carrera_nombre" onchange="mostrar(this.value, $coordinadores);">
-                                <option value="-1"> -- Selecciona tu carrera --</option>
-                                @foreach($carreras as $carrera)
+                            <select id="id_rol" name="id_rol">
+                                <option value="-1"> -- Selecciona una opción --</option>
+                                @foreach($roles as $rol)
                                 <div class="form-group row mb-0">
-                                    <option value="{{ $carrera->id}}"> {{ $carrera->nombre_carrera }}</option>
-                                </div>
-                                
+                                    @if($rol->name != 'Admin')
+                                    <option value="{{ $rol->id }}"> {{ $rol->name }}</option>
+                                    @endif
+                                </div>       
                                 @endforeach
                             </select>
 
-                            
-                        </div>
-                    
-                        <div id="estudiante-header" class="card-header" style="display:none;">{{ __('¿Estudiante '.$user->name.'?') }} </div>
-                            <div id="estudiante" class="card-body" style="display:none;">     
-                                <div class="form-group row mb-0">
-                                    
-                                    
-                                    @foreach($roles as $role)
-                                    @if($role->name != 'Admin' and $role->name != 'Coordinador')
-                                    <div  class="col-md-6">
-                                        <label>
-                                            {!! Form::checkbox('roles', $role->id, null, ['class' => 'mr-1']) !!}
-                                            {{$role->name}}
-                                        </label>
-                                    </div>
-                                    @endif
-                                    @endforeach
+                            <div class="col-md-6 offset-md-4">
                                         
-                                        
-                                    <div class="col-md-6 offset-md-4">
-                                        
-                                        {!! Form::submit('Siguiente', ['class' => 'btn btn-primary mt-2']) !!}
-                                    </div>
-                                </div>                   
-                            </div>
-                        
-
-                        <div id="coordinador-estudiante-header" class="card-header" style="display:none;">{{ __('¿Eres coordinador o estudiante '.$user->name.'?') }} </div>
-                            <div id="coordinador-estudiante" class="card-body" style="display:none;">     
-                                <div class="form-group row mb-0">
-                                    
-                                    
-                                        @foreach($roles as $role)
-                                        @if($role->name != 'Admin')
-                                        <div class="col-md-6">
-                                            <label>
-                                                {!! Form::checkbox('roles', $role->id, null, ['class' => 'mr-1']) !!}
-                                                {{$role->name}}
-                                            </label>
-                                        </div>
-                                        @endif
-                                        @endforeach
-                                        
-                                        
-                                    <div class="col-md-6 offset-md-4">
-                                        
-                                        {!! Form::submit('Siguiente', ['class' => 'btn btn-primary mt-2']) !!}
-                                    </div>
-                                </div>                   
-                            </div>
-                        
+                                {!! Form::submit('Siguiente', ['class' => 'btn btn-primary mt-2']) !!}
+                            </div>  
+                        </div>                                 
+                          
                     {!! Form::close() !!}  
                 </div>
             </div>

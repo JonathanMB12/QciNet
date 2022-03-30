@@ -16,75 +16,75 @@ class CarreraSeeder extends Seeder
     {
         //
         Carrera::create([
-            'nombre_carrera' => 'Ingeniería Biomédica'
+            'nombre_carrera' => 'INGENIERIA BIOMEDICA '
            
         ]);
         Carrera::create([
-            'nombre_carrera' => 'Ingeniería Civil'
+            'nombre_carrera' => 'INGENIERIA CIVIL'
            
         ]);
         Carrera::create([
-            'nombre_carrera' => 'Ingeniería en Alimentos y Biotecnología'
+            'nombre_carrera' => 'INGENIERIA EN ALIMENTOS Y BIOTECOLOGIA'
            
         ]);
         Carrera::create([
-            'nombre_carrera' => 'Ingeniería en Computación'
+            'nombre_carrera' => 'INGENIERIA EN COMPUTACION'
            
         ]);
         Carrera::create([
-            'nombre_carrera' => 'Ingeniería en Comunicaciones y Electrónica'
+            'nombre_carrera' => 'INGENIERIA EN COMUNICACIONES Y ELECTRONICA'
            
         ]);
         Carrera::create([
-            'nombre_carrera' => 'Ingeniería en Informática'
+            'nombre_carrera' => 'INGENIERIA EN INFORMATICA'
            
         ]);
         Carrera::create([
-            'nombre_carrera' => 'Ingeniería en Logística y Transporte'
+            'nombre_carrera' => 'INGENIERIA EN LOGISTICA Y TRANSPORTE'
            
         ]);
         Carrera::create([
-            'nombre_carrera' => 'Ingeniería en Topografía Geomática'
+            'nombre_carrera' => 'INGENIERIA EN TOPOGRAFIA GEOMATICA'
            
         ]);
         Carrera::create([
-            'nombre_carrera' => 'Ingeniería Fotónica'
+            'nombre_carrera' => 'INGENIERIA FOTONICA'
            
         ]);
         Carrera::create([
-            'nombre_carrera' => 'Ingeniería Industrial'
+            'nombre_carrera' => 'INGENIERIA INDUSTRIAL'
            
         ]);
         Carrera::create([
-            'nombre_carrera' => 'Ingeniería Mecánica Eléctrica'
+            'nombre_carrera' => 'INGENIERIA MECANICA ELECTRICA'
            
         ]);
         Carrera::create([
-            'nombre_carrera' => 'Ingeniería Química'
+            'nombre_carrera' => 'INGENIERIA QUIMICA'
            
         ]);
         Carrera::create([
-            'nombre_carrera' => 'Ingeniería Robótica'
+            'nombre_carrera' => 'INGENIERIA ROBOTICA'
            
         ]);
         Carrera::create([
-            'nombre_carrera' => 'Licenciatura en Ciencia de Materiales'
+            'nombre_carrera' => 'LICENCIATURA EN CIENCIAS DE MATERIALES'
            
         ]);
         Carrera::create([
-            'nombre_carrera' => 'Licenciatura en Física'
+            'nombre_carrera' => 'LICENCIATURA EN FISICA'
            
         ]);
         Carrera::create([
-            'nombre_carrera' => 'Licenciatura en Matemáticas'
+            'nombre_carrera' => 'LICENCIATURA EN MATEMATICAS'
            
         ]);
         Carrera::create([
-            'nombre_carrera' => 'Licenciatura en Química'
+            'nombre_carrera' => 'LICENCIATURA EN QUIMICA'
            
         ]);
         Carrera::create([
-            'nombre_carrera' => 'Licenciatura en Químico Farmacobiólogo'
+            'nombre_carrera' => 'LICENCIATURA EN QUIMICO FARMACOBIOLOGO'
            
         ]);
 

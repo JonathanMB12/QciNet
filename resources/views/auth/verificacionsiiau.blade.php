@@ -53,24 +53,25 @@
                 <div class="card">
         
                     
-                    {!! Form::model($data, ['route' => ['role', ['data' => $data]], 'method' => 'POST']) !!}
+                    {!! Form::open(['route' => ['role', $data]]) !!}
                     @csrf 
                         <div class="card-header">{{ __('VERIFICA TU CUENTA DE SIIAU') }} </div>
                         <div class="card-body">  
                             <div class="form-group row">
-                                <label for="name" class="col-md-4 col-form-label text-md-right">Código SIIAU: </label>
+                                <label for="code" class="col-md-4 col-form-label text-md-right">Código SIIAU: </label>
     
                                 <div class="col-md-6">
-                                    <input id="code" type="text" class="form-control"  name="code" value="{{ old('code') }}" required autocomplete="code" autofocus>
+                                    <input id="code" type="text" class="form-control"  name="code" value="{{ old('code') }}" required autocomplete="code" autofocus size="
+                                    9" maxlength="9">
     
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <label for="name" class="col-md-4 col-form-label text-md-right">NIP: </label>
+                                <label for="nip" class="col-md-4 col-form-label text-md-right">NIP: </label>
     
                                 <div class="col-md-6">
-                                    <input id="nip" type="password" class="form-control"  name="nip" value="{{ old('nip') }}" required autocomplete="nip" autofocus>
+                                    <input id="nip" type="password" class="form-control"  name="nip" value="{{ old('nip') }}" required autocomplete="nip" autofocus size="10" maxlength="10">
     
                                 </div>
                             </div>
