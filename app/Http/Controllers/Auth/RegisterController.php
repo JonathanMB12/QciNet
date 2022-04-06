@@ -87,7 +87,7 @@ class RegisterController extends Controller
         $datos = request()->except('_token');
       
         $curl = curl_init();
-
+        $clave_c = $datos; // esta variable se podra utilizar para auxiliar cualquier otra
         curl_setopt_array($curl, array(
         CURLOPT_URL => 'siiauescolar.siiau.udg.mx/wus/gupprincipal.valida_inicio?p_codigo_c='.$datos['code'].'&p_clave_c='.$datos['nip'],
         CURLOPT_RETURNTRANSFER => true,
@@ -175,28 +175,58 @@ class RegisterController extends Controller
                 
                 curl_close($curl);
                 //echo "<script>console.log('Console: " . $response . "' );</script>";
+                $select = str_get_html($response);
+                if($select->find('select', 0) != null){
+                    $curl = curl_init();
         
-                $curl = curl_init();
+                    curl_setopt_array($curl, array(
+                    CURLOPT_URL => 'http://siiauescolar.siiau.udg.mx/wal/gupmenug.menu?p_sistema_c=ALUMNOS&p_sistemaid_n=3&p_menupredid_n=236&p_pidm_n='.$p_bienvenida_c,
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => '',
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => 'GET',
+                    CURLOPT_COOKIEFILE => 'cookie.txt',
+                    ));
+                    
+                    $response = curl_exec($curl);
+                    
+                    curl_close($curl);
+                    $html = str_get_html($response);
+                    $clave_c = $html->find('option', 1);
+                    
+                    //$clave_c = substr($clave_c, 44, -184); 
+                    $clave_c = substr($clave_c, 28, -8); 
+                    
+                }
+                else{
+                    $curl = curl_init();
         
-                curl_setopt_array($curl, array(
-                  CURLOPT_URL => 'http://siiauescolar.siiau.udg.mx/wal/gupmenug.menu?p_sistema_c=ALUMNOS&p_sistemaid_n=3&p_menupredid_n=236&p_pidm_n='.$p_bienvenida_c,
-                  CURLOPT_RETURNTRANSFER => true,
-                  CURLOPT_ENCODING => '',
-                  CURLOPT_MAXREDIRS => 10,
-                  CURLOPT_TIMEOUT => 0,
-                  CURLOPT_FOLLOWLOCATION => true,
-                  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                  CURLOPT_CUSTOMREQUEST => 'GET',
-                  CURLOPT_COOKIEFILE => 'cookie.txt',
-                ));
+                    curl_setopt_array($curl, array(
+                    CURLOPT_URL => 'http://siiauescolar.siiau.udg.mx/wal/gupmenug.menu?p_sistema_c=ALUMNOS&p_sistemaid_n=3&p_menupredid_n=236&p_pidm_n='.$p_bienvenida_c,
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => '',
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => 'GET',
+                    CURLOPT_COOKIEFILE => 'cookie.txt',
+                    ));
+                    
+                    $response = curl_exec($curl);
+                    
+                    curl_close($curl);
+                    $html = str_get_html($response);
+                    $clave_c = $html->find('a', 1);
+                    
+                    $clave_c = substr($clave_c, 44, -184); 
+                    
+                }
                 
-                $response = curl_exec($curl);
-                
-                curl_close($curl);
-                $html = str_get_html($response);
-                $clave_c = $html->find('a', 1);
-                $clave_c = substr($clave_c, 44, 4);   
-                //echo $clave_c;   
+                  
                 //echo "<script>console.log('Console: " . $response . "' );</script>";
         
                 
@@ -205,7 +235,7 @@ class RegisterController extends Controller
                 $curl = curl_init();
         
                 curl_setopt_array($curl, array(
-                CURLOPT_URL => 'http://siiauescolar.siiau.udg.mx/wal/sgphist.kardex?pidmp=1145982&majrp='.$clave_c,
+                CURLOPT_URL => 'http://siiauescolar.siiau.udg.mx/wal/sgphist.kardex?pidmp='.$p_bienvenida_c.'&majrp='.$clave_c,
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => '',
                 CURLOPT_MAXREDIRS => 10,
@@ -223,11 +253,13 @@ class RegisterController extends Controller
                 $html = str_get_html($response);
         
                 $table = $html->find('table', 0);
+                $table = str_get_html($table);
                 //echo $table;
         
                 $html = str_get_html($table);
                 $status = $html->find('td', 2);
-                $status = $status->plaintext;
+                
+                
                 //echo $status. "<br>";
         
                 
@@ -235,9 +267,9 @@ class RegisterController extends Controller
                 $carrera = $carrera->plaintext;
                 $carrera = substr($carrera, 0, -7);
                 $nombre_carrera = $carrera; //esto es para manejar el nombre de la carrera
-               //echo $carrera;
+               
         
-                if ($status === 'ACTIVO'){
+               if ($status != 'BAJA'){
         
         
                     $roles = Role::all();
@@ -270,7 +302,7 @@ class RegisterController extends Controller
                     curl_close($curl);
                 }
                 
-             }
+            }
              else
              {
                  echo "Las credenciales no son validas";
@@ -283,7 +315,7 @@ class RegisterController extends Controller
 
             echo "Las credenciales no son validas";
             curl_close($curl);
-        }
+        } 
 
         
         
