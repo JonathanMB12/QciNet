@@ -98,7 +98,7 @@ class UserController extends Controller
 
         if($request->hasFile('image'))
         {
-            $usuario = User::findOrFail($id[0]);
+            $usuario = User::findOrFail($id);
             if($usuario->image != 'default_avatar.png'){
                Storage::delete('public/'.$usuario->image);
             }

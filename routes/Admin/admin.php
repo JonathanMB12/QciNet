@@ -6,7 +6,10 @@ use App\Http\Controllers\CarreraController;
 use App\Http\Controllers\CoordinadorController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PublicacionController;
+use App\Http\Controllers\ComentarioController;
 use App\Http\Controllers\Auth\RegisterController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +32,8 @@ Route::resource('carrera', CarreraController::class)->middleware('auth');
 Route::resource('estudiante', EstudianteController::class)->middleware('auth');
 Route::resource('usuario', UserController::class)->middleware('auth');
 Route::resource('registro', RegisterController::class)->middleware('auth');
+Route::resource('publicacion', PublicacionController::class)->middleware('auth');
+Route::resource('comentario', ComentarioController::class)->middleware('auth');
 //Route::resource('home', HomeController::class)->middleware('auth');
 
 
@@ -45,6 +50,10 @@ Route::get('/usuarios', [UserController::class, 'index'])->middleware('auth')->n
 Route::post('/register/role', [RegisterController::class, 'selectRole'])->name('role');
 Route::post('/verification', [RegisterController::class, 'verification'])->name('verification');
 Route::patch('/index/{user}', [RegisterController::class, 'storeRole'])->name('role.store');
+Route::resource('/publicacion', PublicacionController::class)->middleware('auth')->names('publicacion');
+Route::resource('/comentario', ComentarioController::class)->middleware('auth')->names('comentario');
+
+
 
 
 

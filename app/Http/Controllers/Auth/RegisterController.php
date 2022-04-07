@@ -81,10 +81,11 @@ class RegisterController extends Controller
     public function selectRole(Request $request)
     {
         include 'simple_html_dom.php';
-
+        $coordinador_existente = false;
         
         
         $datos = request()->except('_token');
+        
       
         $curl = curl_init();
         $clave_c = $datos; // esta variable se podra utilizar para auxiliar cualquier otra
@@ -284,17 +285,25 @@ class RegisterController extends Controller
                             $carrera = $aux['id'];
                             $nombre_carrera = $aux['nombre_carrera'];
                         }
+                        foreach($coordinadores as $coordinador)
+                        {
+                            if($coordinador['carrera_id'] == $aux['id'])
+                            {
+                                $coordinador_existente = true;
+                            }
+                        }
                     }
                     
                     //$data = request()->except('_token');
                     $user = User::create([
                         'name' => $datos['name'],
                         'email' => $datos['email'],
-                        
+                        'code' => $datos['code'],
+                        'nip' => $datos['nip'], 
                         'password' => Hash::make($datos['password']),
                     ]);
                     return view('auth.usertype')->with(['user' => $user, 'roles' => $roles, 
-                    'carrera' => $carrera, 'nombre_carrera' => $nombre_carrera, 'coordinadores' => $coordinadores]);
+                    'carrera' => $carrera, 'nombre_carrera' => $nombre_carrera, 'coordinadores' => $coordinadores, 'coordinador_existente'=> $coordinador_existente]);
                 }
                 else{
         

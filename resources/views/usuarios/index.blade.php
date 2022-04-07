@@ -23,7 +23,7 @@
             <th>Imagen<th>
             <th>Nombre del usuario</th>
             <th>Email</th>
-            <th>Acciones</th>
+           
         </tr>
     </thead>
     <tbody>
